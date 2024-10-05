@@ -1,0 +1,54 @@
+/*
+Given an array of strings strs, group all anagrams together into sublists. You may return the output in any order.
+
+An anagram is a string that contains the exact same characters as another string, but the order of the characters can be different.
+
+Example 1:
+
+Input: strs = ["act","pots","tops","cat","stop","hat"]
+
+Output: [["hat"],["act", "cat"],["stop", "pots", "tops"]]
+Example 2:
+
+Input: strs = ["x"]
+
+Output: [["x"]]
+*/
+
+class Solution {
+    boolean isAnagram(String s1, String s2)
+    {
+        char[] s1Array = s1.toCharArray();
+        char[] s2Array = s2.toCharArray();
+
+        Arrays.sort(s1Array);
+        Arrays.sort(s2Array);
+
+        if(Arrays.equals(s1Array,s2Array)){
+            return true;
+        }
+        return false;
+    }
+    public List<List<String>> groupAnagrams(String[] strs) 
+    {
+        List<List<String>> aG = new ArrayList<List<String>>();
+        List<String> list = new ArrayList<String>(Arrays.asList(strs));
+        for(int i=0;i<list.size();i++){
+            List<String> agIn = new ArrayList<String>();
+           agIn.add(list.get(i));
+            for(int j = i+1; j < list.size();j++)
+            {
+                 if(isAnagram(list.get(i), list.get(j)) )
+            {
+                agIn.add(list.get(j));
+                list.remove(j);
+                j--;
+            }
+             
+            //list.remove(i);
+            }
+           aG.add(agIn);
+        }
+        return aG;
+    }
+}
